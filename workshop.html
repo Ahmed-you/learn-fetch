@@ -7,6 +7,27 @@
   </head>
   <body>
     <h1>Open the console</h1>
-    <script></script>
+    <script>
+      const getUser = (username) => {
+        return fetch(`https://api.github.com/users/${username}`).then(
+          (response) => response.json()
+        );
+      };
+
+      const getRepos = (resObj) => {
+        return fetch(resObj.repos_url).then((response) => response.json());
+      };
+
+      getUser("pikachu").then(getRepos).then(console.log).catch(console.error);
+
+      // bonus
+
+      const saraPromise = getUser("sara");
+      const aliPromise = getUser("ali");
+
+      Promise.all([saraPromise, aliPromise])
+        .then(console.log)
+        .catch(console.error);
+    </script>
   </body>
 </html>
